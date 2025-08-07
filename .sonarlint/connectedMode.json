@@ -1,0 +1,4 @@
+{
+    "sonarCloudOrganization": "arista-netdevops-community",
+    "projectKey": "ansible-community-collection"
+}
