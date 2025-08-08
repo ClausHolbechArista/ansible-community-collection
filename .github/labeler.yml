@@ -4,12 +4,6 @@
           - ansible_collections/arista/community/roles/build_output_folders/*
           - ansible_collections/arista/community/roles/build_output_folders/**/*
 
-"role: eos_config_deploy_cvp":
-  - changed-files:
-      - any-glob-to-any-file:
-          - ansible_collections/arista/community/roles/eos_config_deploy_cvp/*
-          - ansible_collections/arista/community/roles/eos_config_deploy_cvp/**/*
-
 "role: eos_validate_state":
   - changed-files:
       - any-glob-to-any-file:
@@ -21,16 +15,6 @@
       - any-glob-to-any-file:
           - ansible_collections/arista/community/roles/dhcp_provisioner/*
           - ansible_collections/arista/community/roles/dhcp_provisioner/**/*
-
-"module: configlet_build_config":
-  - changed-files:
-      - any-glob-to-any-file:
-          - ansible_collections/arista/community/plugins/modules/configlet_build_config.py
-
-"module: inventory_to_container":
-  - changed-files:
-      - any-glob-to-any-file:
-          - ansible_collections/arista/community/plugins/modules/inventory_to_container.py
 
 "type: Python filters":
   - changed-files:

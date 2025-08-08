@@ -6,7 +6,7 @@
   tasks:
     - name: Generate intended configuration
       ansible.builtin.import_role:
-        name: arista.avd.dhcp_provisioner
+        name: arista.community.dhcp_provisioner
       vars:
         fabric_group: DC1_SPINES
         # Overwriting destination dirs .. based on the not so glorious role hack for eos_config_dir_name
@@ -20,7 +20,7 @@
   tasks:
     - name: Generate intended configuration
       ansible.builtin.import_role:
-        name: arista.avd.dhcp_provisioner
+        name: arista.community.dhcp_provisioner
       vars:
         fabric_group: DC1_LEAFS
         # Overwriting destination dirs .. based on the not so glorious role hack for eos_config_dir_name

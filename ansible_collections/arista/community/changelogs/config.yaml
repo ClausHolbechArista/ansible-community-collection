@@ -27,6 +27,6 @@ sections:
   - Bugfixes
 - - known_issues
   - Known Issues
-title: Arista.Avd
+title: Arista.Community
 trivial_section_name: trivial
 use_fqcn: true

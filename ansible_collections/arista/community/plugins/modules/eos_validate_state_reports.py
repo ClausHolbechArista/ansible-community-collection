@@ -9,7 +9,7 @@ version_added: "4.5.0"
 author: Arista Ansible Team (@aristanetworks)
 short_description: Generates validation reports for the eos_validate_state role
 description: |-
-  The `arista.avd.eos_validate_state_reports` module is an Ansible Action Plugin designed to generate
+  The `arista.community.eos_validate_state_reports` module is an Ansible Action Plugin designed to generate
   validation reports from the test results produced by the ANTA test framework.
 
   This plugin requires a JSON file for each host in the Ansible play, containing all test results. The JSON file
@@ -62,7 +62,7 @@ notes:
 
 EXAMPLES = r"""
 - name: Generate validation reports from ANTA test results
-  arista.avd.eos_validate_state_reports:
+  arista.community.eos_validate_state_reports:
     csv_report_path: "/my_avd_project/reports/my-fabric-state.csv"
     md_report_path: "/my_avd_project/reports/my-fabric-state.md"
     validation_report_csv: true

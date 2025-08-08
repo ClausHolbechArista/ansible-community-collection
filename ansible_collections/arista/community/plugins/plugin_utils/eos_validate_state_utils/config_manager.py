@@ -10,20 +10,7 @@ from ipaddress import ip_interface
 
 from ansible.errors import AnsibleActionFail
 
-from ansible_collections.arista.avd.plugins.plugin_utils.pyavd_wrappers import RaiseOnUse
-
-PLUGIN_NAME = "arista.avd.eos_validate_state"
-
-try:
-    from pyavd._errors import AristaAvdError
-    from pyavd._utils import default, get, get_item
-except ImportError as e:
-    AristaAvdError = RaiseOnUse(
-        AnsibleActionFail(
-            f"The '{PLUGIN_NAME}' plugin requires the 'pyavd' Python library. Got import error",
-            orig_exc=e,
-        ),
-    )
+from ansible_collections.arista.community.plugins.plugin_utils.utils import get, get_item
 
 LOGGER = logging.getLogger(__name__)
 
@@ -71,12 +58,12 @@ class ConfigManager:
             AristaAvdError: If host is not in hostvars or if its structured_config is not a mapping object.
         """
         if host not in self.hostvars:
-            raise AristaAvdError(message=f"Host '{host}' is missing from the hostvars.")
+            raise AnsibleActionFail(message=f"Host '{host}' is missing from the hostvars.")
         struct_cfg = self.hostvars[host]
 
         # Check if struct_cfg is a mapping object (e.g. Ansible 'hostvars' object or regular dict)
         if not isinstance(struct_cfg, Mapping):
-            raise AristaAvdError(message=f"Host '{host}' structured_config is not a dictionary or dictionary-like object.")
+            raise AnsibleActionFail(message=f"Host '{host}' structured_config is not a dictionary or dictionary-like object.")
 
         return struct_cfg
 
@@ -146,9 +133,10 @@ class ConfigManager:
 
             # If the host is a VTEP, add the VTEP IP to the mapping
             # TODO: Remove the support of Vxlan1 in AVD 6.0.0 version
-            vtep_interface = default(
-                get(host_struct_cfg, "vxlan_interface.vxlan1.vxlan.source_interface"), get(host_struct_cfg, "vxlan_interface.Vxlan1.vxlan.source_interface")
+            vtep_interface = get(host_struct_cfg, "vxlan_interface.vxlan1.vxlan.source_interface") or get(
+                host_struct_cfg, "vxlan_interface.Vxlan1.vxlan.source_interface"
             )
+
             if vtep_interface is None:
                 continue
 

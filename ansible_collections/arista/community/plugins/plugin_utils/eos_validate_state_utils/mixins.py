@@ -4,23 +4,12 @@
 from __future__ import annotations
 
 import logging
+from typing import TYPE_CHECKING
 
-from ansible.errors import AnsibleActionFail
+from ansible_collections.arista.community.plugins.plugin_utils.utils import get, get_item, log_message
 
-from ansible_collections.arista.avd.plugins.plugin_utils.pyavd_wrappers import RaiseOnUse
-from ansible_collections.arista.avd.plugins.plugin_utils.utils import log_message
-
-PLUGIN_NAME = "arista.avd.eos_validate_state"
-
-try:
-    from pyavd._utils import default, get, get_item
-except ImportError as e:
-    get = get_item = default = RaiseOnUse(
-        AnsibleActionFail(
-            f"The '{PLUGIN_NAME}' plugin requires the 'pyavd' Python library. Got import error",
-            orig_exc=e,
-        ),
-    )
+if TYPE_CHECKING:
+    from .avdtestbase import AvdTestBase
 
 LOGGER = logging.getLogger(__name__)
 
@@ -34,7 +23,7 @@ class DeviceUtilsMixin:
     It should only be used as a mixin class in the AvdTestBase classes.
     """
 
-    def update_interface_shutdown(self, interface: dict, host: str | None = None) -> None:
+    def update_interface_shutdown(self: AvdTestBase, interface: dict, host: str | None = None) -> None:
         """
         Update the interface shutdown key, considering EOS default.
 
@@ -51,11 +40,11 @@ class DeviceUtilsMixin:
         """
         host_struct_cfg = self.config_manager.get_host_structured_config(host=host) if host else self.structured_config
         if "Ethernet" in get(interface, "name", ""):
-            interface["shutdown"] = default(get(interface, "shutdown"), get(host_struct_cfg, "interface_defaults.ethernet.shutdown"), False)  # noqa: FBT003
+            interface["shutdown"] = get(interface, "shutdown", default=get(host_struct_cfg, "interface_defaults.ethernet.shutdown", default=False))
         else:
             interface["shutdown"] = get(interface, "shutdown", default=False)
 
-    def is_peer_available(self, peer: str) -> bool:
+    def is_peer_available(self: AvdTestBase, peer: str) -> bool:
         """
         Check if a peer is deployed by looking at his `is_deployed` key.
 
@@ -77,7 +66,7 @@ class DeviceUtilsMixin:
             return False
         return True
 
-    def get_interface_ip(self, interface_model: str, interface_name: str, host: str | None = None) -> str | None:
+    def get_interface_ip(self: AvdTestBase, interface_model: str, interface_name: str, host: str | None = None) -> str | None:
         """
         Retrieve the IP address of a specified host interface.
 
@@ -102,7 +91,7 @@ class DeviceUtilsMixin:
 
         return ip_address
 
-    def is_dhcp_interface(self, interface: dict) -> bool:
+    def is_dhcp_interface(self: AvdTestBase, interface: dict) -> bool:
         """
         Check if the interface is a DHCP interface.
 
@@ -116,7 +105,7 @@ class DeviceUtilsMixin:
         """
         return interface["ip_address"] == "dhcp"
 
-    def is_subinterface(self, interface: dict) -> bool:
+    def is_subinterface(self: AvdTestBase, interface: dict) -> bool:
         """
         Check if the interface is a subinterface.
 
@@ -130,11 +119,11 @@ class DeviceUtilsMixin:
         """
         return "." in interface.get("name", "")
 
-    def is_vtep(self) -> bool:
+    def is_vtep(self: AvdTestBase) -> bool:
         """Check if the host is a VTEP by verifying the presence of a VXLAN interface."""
-        return get(self.structured_config, "vxlan_interface") is not None
+        return self.structured_config.get("vxlan_interface") is not None
 
-    def is_wan_vtep(self) -> bool:
+    def is_wan_vtep(self: AvdTestBase) -> bool:
         """Check if the host is a WAN VTEP by verifying the presence of a VXLAN interface and Dps in the source interface."""
         return self.is_vtep() and "Dps" in get(
             self.structured_config,
@@ -154,7 +143,7 @@ class ValidationMixin:
 
     # TODO: @carl-baillargeon: Split the validate_data method into two methods: one for expected key-value pairs and one for required keys.
     def validate_data(
-        self,
+        self: AvdTestBase,
         data: dict | None = None,
         data_path: str | None = None,
         host: str | None = None,

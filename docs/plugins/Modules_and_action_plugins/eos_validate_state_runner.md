@@ -1,6 +1,6 @@
 ---
 # This title is used for search results
-title: arista.avd.eos_validate_state_runner
+title: arista.community.eos_validate_state_runner
 ---
 <!--
   ~ Copyright (c) 2023-2025 Arista Networks, Inc.
@@ -11,13 +11,13 @@ title: arista.avd.eos_validate_state_runner
 # eos_validate_state_runner
 
 !!! note
-    Always use the FQCN (Fully Qualified Collection Name) `arista.avd.eos_validate_state_runner` when using this plugin.
+    Always use the FQCN (Fully Qualified Collection Name) `arista.community.eos_validate_state_runner` when using this plugin.
 
 Uses ANTA for eos_validate_state role
 
 ## Synopsis
 
-The `arista.avd.eos_validate_state_runner` module is an Ansible Action Plugin leveraging the ANTA test framework to validate that the generated structured configurations by AVD are applied to the devices and that the deployed network is working correctly.
+The `arista.community.eos_validate_state_runner` module is an Ansible Action Plugin leveraging the ANTA test framework to validate that the generated structured configurations by AVD are applied to the devices and that the deployed network is working correctly.
 
 This plugin requires a valid structured configuration for each device in the hostvars; otherwise, some tests will not be generated.
 
@@ -39,7 +39,7 @@ The plugin offers the following capabilities:
 | <samp>custom_anta_catalogs_dir</samp> | any | optional | None |  | The directory where custom ANTA test catalogs are stored.<br>Files must be named after the device hostname or the Ansible group name and have a `.yml` or `.yaml` extension. |
 | <samp>skip_tests</samp> | list | optional | None |  | A list of dictionaries specifying categories and, optionally, tests to skip.<br>Each dictionary must have a key `category` and can optionally include a `tests` key. |
 | <samp>&nbsp;&nbsp;&nbsp;&nbsp;category</samp> | str | optional | None |  | The name of an AvdTest category (e.g., `AvdTestHardware`). |
-| <samp>&nbsp;&nbsp;&nbsp;&nbsp;tests</samp> | list | optional | None |  | An optional list of specific tests in the category to skip (e.g., `VerifyRoutingProtocolModel` in `AvdTestBGP`).<br>If not specified, all tests in the category are considered.<br>For a complete list of available tests, see [link to the test list](https://avd.arista.com/stable/roles/eos_validate_state/anta_integration.html#test-categories). |
+| <samp>&nbsp;&nbsp;&nbsp;&nbsp;tests</samp> | list | optional | None |  | An optional list of specific tests in the category to skip (e.g., `VerifyRoutingProtocolModel` in `AvdTestBGP`).<br>If not specified, all tests in the category are considered. |
 | <samp>cprofile_file</samp> | any | optional | None |  | The filename for storing cProfile data, useful for debugging performance issues.<br>Be aware that enabling cProfile can affect performance, so use it only for troubleshooting. |
 
 ## Notes
@@ -58,7 +58,7 @@ The plugin offers the following capabilities:
 
 ```yaml
 - name: Execute eos_validate_state_runner leveraging ANTA
-  arista.avd.eos_validate_state_runner:
+  arista.community.eos_validate_state_runner:
     logging_level: ERROR
     save_catalog: true
     device_catalog_path: "/my_avd_project/intended/test_catalogs/{{ inventory_hostname }}-catalog.yml"

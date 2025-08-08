@@ -76,7 +76,7 @@ Below is an example to use in your playbook to build output folders using defaul
   tasks:
     - name: 'Build local folders for output'
       ansible.builtin.import_role:
-        name: arista.avd.build_output_folders
+        name: arista.community.build_output_folders
 ```
 
 ## License

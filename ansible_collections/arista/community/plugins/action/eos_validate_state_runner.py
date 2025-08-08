@@ -11,8 +11,8 @@ from typing import TYPE_CHECKING, Any
 from ansible.errors import AnsibleActionFail
 from ansible.plugins.action import ActionBase, display
 
-from ansible_collections.arista.avd.plugins.plugin_utils.eos_validate_state_utils import AnsibleEOSDevice, ConfigManager, get_anta_results
-from ansible_collections.arista.avd.plugins.plugin_utils.utils import (
+from ansible_collections.arista.community.plugins.plugin_utils.eos_validate_state_utils import AnsibleEOSDevice, ConfigManager, get_anta_results
+from ansible_collections.arista.community.plugins.plugin_utils.utils import (
     PythonToAnsibleContextFilter,
     PythonToAnsibleHandler,
     get_validated_path,
@@ -29,7 +29,7 @@ if TYPE_CHECKING:
     from collections.abc import Mapping
     from pathlib import Path
 
-LOGGER = logging.getLogger("ansible_collections.arista.avd")
+LOGGER = logging.getLogger("ansible_collections.arista.community")
 with suppress(AttributeError):
     # ANTA currently add some RichHandler to the root logger so need to disable propagation
     # Suppressing AttribueError for ansible-lint
@@ -177,6 +177,5 @@ def setup_module_logging(hostname: str, result: dict) -> None:
     python_to_ansible_handler = PythonToAnsibleHandler(result, display)
     python_to_ansible_handler.addFilter(python_to_ansible_filter)
     LOGGER.addHandler(python_to_ansible_handler)
-    # TODO: mechanism to manipulate the logger globally for pyavd
     # Keep debug to be able to see logs with `-v` and `-vvv`
     LOGGER.setLevel(logging.DEBUG)

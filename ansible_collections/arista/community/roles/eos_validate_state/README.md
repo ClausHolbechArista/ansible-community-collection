@@ -244,7 +244,7 @@ When specifying a group, it must be a group from the Ansible inventory. The cust
   tasks:
     - name: validate states on EOS devices
       ansible.builtin.import_role:
-        name: arista.avd.eos_validate_state
+        name: arista.community.eos_validate_state
       vars:
         # Optionally save catalogs
         save_catalog: true

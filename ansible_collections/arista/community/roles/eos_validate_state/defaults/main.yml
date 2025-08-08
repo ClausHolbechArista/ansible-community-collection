@@ -1,4 +1,4 @@
-# Format for path to r/w reports. Sync with default values configured in arista.avd.build_output_folders
+# Format for path to r/w reports. Sync with default values configured in arista.community.build_output_folders
 root_dir: "{{ inventory_dir }}"
 
 # AVD configurations output

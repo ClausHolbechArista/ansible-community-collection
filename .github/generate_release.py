@@ -16,9 +16,7 @@ import yaml
 
 SCOPES = [
     "build_output_folders",
-    "cvp_configlet_upload",
     "dhcp_provisioner",
-    "eos_config_deploy_cvp",
     "eos_validate_state",
     "plugins",
     "requirements",
@@ -64,9 +62,9 @@ if __name__ == "__main__":
     exclude_list.extend(["rn: Test", "rn: CI"])
 
     # Then add the categories
-    # First add Breaking Changes EXCEPT `pyavd` ones
+    # First add Breaking Changes
     breaking_label_categories = ["Feat", "Fix", "Cut", "Revert", "Refactor", "Bump"]
-    breaking_labels = [f"rn: {cc_type}({scope})!" for cc_type in breaking_label_categories for scope in SCOPES if scope != "pyavd"]
+    breaking_labels = [f"rn: {cc_type}({scope})!" for cc_type in breaking_label_categories for scope in SCOPES]
     breaking_labels.extend([f"rn: {cc_type}!" for cc_type in breaking_label_categories])
 
     categories_list.append(
@@ -86,7 +84,7 @@ if __name__ == "__main__":
         },
     )
 
-    # Add Documentation - except for PyAVD
+    # Add Documentation
     doc_labels = [f"rn: Doc({scope})" for scope in SCOPES]
     doc_labels.append("rn: Doc")
 

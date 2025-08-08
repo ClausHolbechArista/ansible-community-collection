@@ -6,7 +6,7 @@
 {# Based on https://github.com/xlab-steampunk/ansible-doc-extractor/blob/master/src/ansible_doc_extractor/templates/module.md.j2 #}
 ---
 # This title is used for search results
-title: {{ collection | default("arista.avd", true) ~ "." ~ module }}
+title: {{ collection | default("arista.community", true) ~ "." ~ module }}
 ---
 <!--
   ~ Copyright (c) 2023-2025 Arista Networks, Inc.
@@ -60,7 +60,7 @@ title: {{ collection | default("arista.avd", true) ~ "." ~ module }}
 # {{ module }}
 
 !!! note
-    Always use the FQCN (Fully Qualified Collection Name) `{{ collection | default("arista.avd", true) ~ "." ~ module }}` when using this plugin.
+    Always use the FQCN (Fully Qualified Collection Name) `{{ collection | default("arista.community", true) ~ "." ~ module }}` when using this plugin.
 {% if deprecated %}
 
 !!! danger "This plugin is **deprecated**"

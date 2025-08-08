@@ -13,20 +13,6 @@ from urllib.error import HTTPError
 from ansible.errors import AnsibleActionFail, AnsibleConnectionFailure
 from ansible.module_utils.connection import ConnectionError as AnsibleConnectionError
 
-from ansible_collections.arista.avd.plugins.plugin_utils.pyavd_wrappers import RaiseOnUse
-
-PLUGIN_NAME = "arista.avd.eos_validate_state"
-
-try:
-    from pyavd._errors import AristaAvdError
-except ImportError as e:
-    AristaAvdError = RaiseOnUse(
-        AnsibleActionFail(
-            f"The '{PLUGIN_NAME}' plugin requires the 'pyavd' Python library. Got import error",
-            orig_exc=e,
-        ),
-    )
-
 logger = getLogger(__name__)
 
 try:
@@ -73,14 +59,14 @@ class AnsibleEOSDevice(AntaDevice):
             AristaAvdError: Raised if ANTA is not imported or if the provided Ansible connection does not use the EOS HttpApi plugin.
         """
         if not HAS_ANTA:
-            raise AristaAvdError(message="AVD could not import the required 'anta' Python library")
+            raise AnsibleActionFail(message="AVD could not import the required 'anta' Python library")
 
         super().__init__(name, tags, disable_cache=False)
         self.check_mode = check_mode
 
         # Check the ansible connection is defined
         if not self.check_mode and not hasattr(connection, "_sub_plugin"):
-            raise AristaAvdError(
+            raise AnsibleActionFail(
                 message="AVD could not determine the Ansible connection plugin used. "
                 "Please ensure that the 'ansible_network_os' and 'ansible_connection' variables are set to 'eos' and 'httpapi' respectively for this host.",
             )
@@ -88,7 +74,7 @@ class AnsibleEOSDevice(AntaDevice):
         if self.check_mode or (plugin_name := connection._sub_plugin.get("name")) == ANSIBLE_EOS_PLUGIN_NAME:
             self._connection = connection
         else:
-            raise AristaAvdError(
+            raise AnsibleActionFail(
                 message=f"The provided Ansible connection does not use EOS HttpApi plugin: {plugin_name}. "
                 "Please ensure that the 'ansible_network_os' and 'ansible_connection' variables are set to 'eos' and 'httpapi' respectively for this host.",
             )

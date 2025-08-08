@@ -9,7 +9,7 @@ version_added: "4.4.0"
 author: Arista Ansible Team (@aristanetworks)
 short_description: Uses ANTA for eos_validate_state role
 description:
-  - The `arista.avd.eos_validate_state_runner` module is an Ansible Action Plugin leveraging the ANTA test
+  - The `arista.community.eos_validate_state_runner` module is an Ansible Action Plugin leveraging the ANTA test
     framework to validate that the generated structured configurations by AVD are applied to the devices and
     that the deployed network is working correctly.
   - This plugin requires a valid structured configuration for each device in the hostvars; otherwise, some tests will not be generated.
@@ -59,8 +59,6 @@ options:
         description:
           - An optional list of specific tests in the category to skip (e.g., `VerifyRoutingProtocolModel` in `AvdTestBGP`).
           - If not specified, all tests in the category are considered.
-          - For a complete list of available tests,
-            see [link to the test list](https://avd.arista.com/stable/roles/eos_validate_state/anta_integration.html#test-categories).
   cprofile_file:
     description:
       - The filename for storing cProfile data, useful for debugging performance issues.
@@ -81,7 +79,7 @@ notes:
 
 EXAMPLES = r"""
 - name: Execute eos_validate_state_runner leveraging ANTA
-  arista.avd.eos_validate_state_runner:
+  arista.community.eos_validate_state_runner:
     logging_level: ERROR
     save_catalog: true
     device_catalog_path: "/my_avd_project/intended/test_catalogs/{{ inventory_hostname }}-catalog.yml"

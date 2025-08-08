@@ -10,23 +10,9 @@ from typing import TYPE_CHECKING
 from ansible.errors import AnsibleActionFail
 from yaml import CSafeLoader, YAMLError, dump, load
 
-from ansible_collections.arista.avd.plugins.plugin_utils.merge import merge_catalogs
-from ansible_collections.arista.avd.plugins.plugin_utils.pyavd_wrappers import RaiseOnUse
-from ansible_collections.arista.avd.plugins.plugin_utils.utils import NoAliasDumper
-from ansible_collections.arista.avd.roles.eos_validate_state.python_modules.constants import AVD_TEST_CLASSES
-
-PLUGIN_NAME = "arista.avd.eos_validate_state"
-
-try:
-    from pyavd._errors import AristaAvdError
-    from pyavd._utils import get_item
-except ImportError as e:
-    AristaAvdError = get_item = RaiseOnUse(
-        AnsibleActionFail(
-            f"The '{PLUGIN_NAME}' plugin requires the 'pyavd' Python library. Got import error",
-            orig_exc=e,
-        ),
-    )
+from ansible_collections.arista.community.plugins.plugin_utils.merge import merge_catalogs
+from ansible_collections.arista.community.plugins.plugin_utils.utils import NoAliasDumper, get_item
+from ansible_collections.arista.community.roles.eos_validate_state.python_modules.constants import AVD_TEST_CLASSES
 
 if TYPE_CHECKING:
     from pathlib import Path
@@ -82,11 +68,9 @@ def get_anta_results(
     Returns:
     -------
       results (list[dict]): A list of dictionary containing the ANTA results for the device.
-
-    TODO: When moving to pyavd: Make anta_device optional and use ANTA default AntaDevice class.
     """
     if not HAS_ANTA:
-        raise AristaAvdError(message="AVD could not import the required 'anta' Python library")
+        raise AnsibleActionFail(message="AVD could not import the required 'anta' Python library")
 
     # Setup ANTA logging
     setup_logging(level=logging_level)
@@ -151,7 +135,7 @@ def load_custom_catalogs(catalog_files: list[Path]) -> dict:
                 catalog_list.append(catalog)
         except (OSError, YAMLError) as error:  # noqa: PERF203 TODO: Investigate and improve code to avoid try/except inside loop
             msg = f"Failed to load the custom ANTA catalog from {file}: {error!s}"
-            raise AristaAvdError(msg) from error
+            raise AnsibleActionFail(msg) from error
 
     return merge_catalogs(*catalog_list) if catalog_list else {}
 

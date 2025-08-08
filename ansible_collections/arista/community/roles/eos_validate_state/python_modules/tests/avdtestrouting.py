@@ -6,8 +6,8 @@ from __future__ import annotations
 import logging
 from functools import cached_property
 
-from ansible_collections.arista.avd.plugins.plugin_utils.eos_validate_state_utils.avdtestbase import AvdTestBase
-from ansible_collections.arista.avd.plugins.plugin_utils.utils import default, get
+from ansible_collections.arista.community.plugins.plugin_utils.eos_validate_state_utils.avdtestbase import AvdTestBase
+from ansible_collections.arista.community.plugins.plugin_utils.utils import get
 
 from ..bgp_constants import BGP_ADDRESS_FAMILIES  # noqa: TID252 will be fixed when moving to pyavd
 
@@ -57,9 +57,8 @@ class AvdTestRoutingTable(AvdTestBase):
             LOGGER.info("Host is not a VTEP since it doesn't have a VXLAN interface. %s is skipped.", self.__class__.__name__)
             return None
         # TODO: Remove the support of Vxlan1 in AVD 6.0.0 version
-        vtep_interface = default(
-            get(self.structured_config, "vxlan_interface.vxlan1.vxlan.source_interface"),
-            get(self.structured_config, "vxlan_interface.Vxlan1.vxlan.source_interface"),
+        vtep_interface = get(self.structured_config, "vxlan_interface.vxlan1.vxlan.source_interface") or get(
+            self.structured_config, "vxlan_interface.Vxlan1.vxlan.source_interface"
         )
 
         # TODO: For now, we exclude WAN VTEPs from testing

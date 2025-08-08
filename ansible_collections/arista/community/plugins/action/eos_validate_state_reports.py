@@ -9,25 +9,12 @@ from typing import TYPE_CHECKING, Any
 from ansible.errors import AnsibleActionFail
 from ansible.plugins.action import ActionBase, display
 
-from ansible_collections.arista.avd.plugins.plugin_utils.eos_validate_state_utils import CSVReport, MDReport, ResultsManager
-from ansible_collections.arista.avd.plugins.plugin_utils.pyavd_wrappers import RaiseOnUse
-from ansible_collections.arista.avd.plugins.plugin_utils.utils import get_validated_path, get_validated_value
+from ansible_collections.arista.community.plugins.plugin_utils.eos_validate_state_utils import CSVReport, MDReport, ResultsManager
+from ansible_collections.arista.community.plugins.plugin_utils.utils import get_validated_path, get_validated_value
 
 if TYPE_CHECKING:
     from collections.abc import Generator
     from pathlib import Path
-
-PLUGIN_NAME = "arista.avd.eos_validate_state_reports"
-
-try:
-    from pyavd._utils import get
-except ImportError as e:
-    get = RaiseOnUse(
-        AnsibleActionFail(
-            f"The '{PLUGIN_NAME}' plugin requires the 'pyavd' Python library. Got import error",
-            orig_exc=e,
-        ),
-    )
 
 
 def _test_results_gen(input_path: Path) -> Generator[dict, None, None]:
@@ -81,7 +68,7 @@ class ActionModule(ActionBase):
             for host in sorted(ansible_play_hosts_all):
                 host_hostvars = hostvars[host]
                 # Hosts marked as not deployed do not have any results
-                if not get(host_hostvars, "is_deployed", default=True):
+                if not host_hostvars.get("is_deployed", True):
                     display.warning(f"No test results for host {host} since 'is_deployed' is False")
                     continue
                 try:

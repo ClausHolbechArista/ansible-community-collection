@@ -6,7 +6,7 @@ from __future__ import annotations
 import logging
 from functools import cached_property
 
-from ansible_collections.arista.avd.plugins.plugin_utils.eos_validate_state_utils.avdtestbase import AvdTestBase
+from ansible_collections.arista.community.plugins.plugin_utils.eos_validate_state_utils.avdtestbase import AvdTestBase
 
 LOGGER = logging.getLogger(__name__)
 

@@ -20,7 +20,7 @@ cv_settings:
       servers:
         - name: 192.168.200.11
 
-# Note! The arista.avd.dhcp_provisioner role does not support cv_settings.
+# Note! The arista.community.dhcp_provisioner role does not support cv_settings.
 # Instead the ZTP URL can be set with 'ztp_bootstrap_file'
 ztp_bootstrap_file: http://192.168.200.11/ztp/bootstrap
 

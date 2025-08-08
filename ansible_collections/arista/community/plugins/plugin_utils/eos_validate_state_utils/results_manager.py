@@ -5,7 +5,7 @@ from __future__ import annotations
 
 from collections import defaultdict
 
-from ansible_collections.arista.avd.roles.eos_validate_state.python_modules.constants import ACRONYM_CATEGORIES
+from ansible_collections.arista.community.roles.eos_validate_state.python_modules.constants import ACRONYM_CATEGORIES
 
 from .constants import RESULTS_MAPPING, STATS_MAPPING
 
