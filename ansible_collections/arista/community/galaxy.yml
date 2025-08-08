@@ -6,10 +6,10 @@
 namespace: arista
 
 # The name of the collection. Has the same character restrictions as 'namespace'
-name: avd
+name: community
 
 # The version of the collection. Must be compatible with semantic versioning
-version: 5.6.0-dev1
+version: 0.0.1
 # The path to the Markdown (.md) readme file. This path is relative to the root of the collection
 readme: README.md
 
@@ -21,7 +21,7 @@ authors:
 ### OPTIONAL but strongly recommended
 
 # A short summary description of the collection
-description: Ansible Roles & Modules to support Arista AVD
+description: Community-driven collection of Arista plugins
 
 # The path to the license file for the collection. This path is relative to the root of the collection. This key is
 # mutually exclusive with 'license'
@@ -29,7 +29,7 @@ license_file: "LICENSE"
 
 # A list of tags you want to associate with the collection for indexing/searching. A tag name has the same character
 # requirements as 'namespace' and 'name'
-tags: ["arista", "network", "networking", "eos", "avd", "cloudvision", "cvp"]
+tags: ["community", "arista", "network", "networking", "eos", "avd", "cloudvision", "cvp"]
 
 # Collections that this collection requires to be installed for it to be usable. The key of the dict is the
 # collection label 'namespace.name'. The value is a version range
@@ -41,16 +41,16 @@ dependencies:
   "ansible.utils": ">=3.0.0"
 
 # The URL of the originating SCM repository
-repository: https://github.com/aristanetworks/avd
+repository: https://github.com/arista-netdevops-community/ansible-community-collection
 
 # The URL to any online docs
-documentation: https://avd.arista.com
+documentation: https://github.com/arista-netdevops-community/ansible-community-collection
 
 # The URL to the homepage of the collection/project
-homepage: https://avd.arista.com
+homepage: https://github.com/arista-netdevops-community/ansible-community-collection
 
 # The URL to the collection issue tracker
-issues: https://github.com/aristanetworks/avd/issues
+issues: https://github.com/arista-netdevops-community/ansible-community-collection/issues
 
 # Ignore the following files in the collection
 # overriding the default because we want some dotfiles.
@@ -67,7 +67,6 @@ manifest:
     - recursive-exclude changelogs/fragments_backup **
     - recursive-include examples **
     - recursive-exclude molecule **
-    - include collections.yml # TODO: remove collections.yml in 6.0.0
     - include requirements.yml
     - include pylintrc
     - include pytest.ini
@@ -75,8 +74,6 @@ manifest:
     - recursive-exclude tests/output **
     - global-exclude /.* /__pycache__ *.pyc *.pyo *.bak *~ *.swp
     # Adding dotfiles
-    - include examples/cv-pathfinder/.vault
     - include .ansible-lint
     - include .yamllint
-    - include tests/integration/targets/vars_global_vars/zz_global_vars/.03.yml
   omit_default_directives: true

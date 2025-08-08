@@ -52,7 +52,7 @@
   - changed-files:
       - any-glob-to-any-file:
           - README.md
-          - contributing.md
+          - CONTRIBUTE.md
           - ansible_collections/arista/community/*.md
           - ansible_collections/arista/community/docs/*
           - ansible_collections/arista/community/docs/**/*

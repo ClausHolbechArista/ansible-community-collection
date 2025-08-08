@@ -25,6 +25,6 @@ Fixes #<ISSUE ID>
 
 <!--- Go over all the following points, and put an `x` in all the boxes that apply. -->
 <!--- If you're unsure about any of these, don't hesitate to ask. We're here to help! -->
-- [ ] My code has been rebased from devel before I start
-- [ ] I have read the **CONTRIBUTING** document.
+- [ ] My code has been rebased from `main` before I started.
+- [ ] I have read the [contribution guide](https://github.com/arista-netdevops-community/ansible-community-collection/CONTRIBUTE.md).
 - [ ] My change requires a change to the documentation and the documentation has been updated accordingly.

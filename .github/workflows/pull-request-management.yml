@@ -6,7 +6,7 @@ name: "Collection code testing"
   merge_group:
   push:
     branches:
-      - devel
+      - main
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref }}

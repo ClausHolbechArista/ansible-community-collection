@@ -49,7 +49,9 @@ body:
     id: terms
     attributes:
       label: Contributing Guide
-      description: By submitting this issue, you agree to follow our [Contributing Guide](https://avd.arista.com/devel/docs/contribution/overview.html)
+      description: |
+        By submitting this issue, you agree to follow our
+        [contribution guide](https://github.com/arista-netdevops-community/ansible-community-collection/CONTRIBUTE.md)
       options:
         - label: I agree to follow this project Code of Conduct
           required: true
